@@ -16,9 +16,30 @@
 >
 >
 >### Installing APM Agent
->Follow the instructions [here](https://www.elastic.co/guide/en/apm/agent/index.html).
+>
+>### Installing Agent on Tomcat Server
+>1. Download agent from [maven central](https://search.maven.org/search?q=g:co.elastic.apm%20AND%20a:elastic-apm-agent) in a location that the application can reach (directly or by docker volume). 
+>2. Create the file setenv.sh in `$JBOSS_HOME/bin`, changin values:
+>```bash
+># $JBOSS_HOME/bin/setenv.sh
+>export CATALINA_OPTS="$CATALINA_OPTS -javaagent:<LOCAL_DO_ARQUIVO_APM.JAR>"
+>export CATALINA_OPTS="$CATALINA_OPTS -Delastic.apm.service_name=<NOME_DO_SERVICO>"
+>export CATALINA_OPTS="$CATALINA_OPTS -Delastic.apm.server_url=<CAMINHO_DO_SERVIDOR_APM>"
+>export CATALINA_OPTS="$CATALINA_OPTS -Delastic.apm.environment=<ENVIRONMENT EM USO: production / release / homologation>"
+>export CATALINA_OPTS="$CATALINA_OPTS -Delastic.apm.application_packages=br.com"
+>```
+>3. Restart application.
+>
+>### Installing Agent on Java Application (java -jar)
+>1. Download agent from [maven central](https://search.maven.org/search?q=g:co.elastic.apm%20AND%20a:elastic-apm-agent) in a location that the application can reach (directly or by docker volume). 
+>2. Change the `java -jar application.jar` command to:
+>```bash
+>java -javaagent:<LOCAL_DO_ARQUIVO_APM.JAR> -Delastic.apm.service_name=<NOME_DO_SERVICO> -Delastic.apm.server_url=<CAMINHO_DO_SERVIDOR_APM> -Delastic.apm.environment=<ENVIRONMENT EM USO: production / release / homologation> -Delastic.apm.application_packages=br.com -jar application.jar
+>```
+>3. Run the application.
 >
 >
+>Aditional instructions [in the elastic site](https://www.elastic.co/guide/en/apm/agent/index.html).
 
 
 Run the latest version of the [Elastic stack][elk-stack] with Docker and Docker Compose.
